@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Violetelle Register</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="login-card">
+
+    <h1>🌸 Violetelle</h1>
+    <p>Create Your Account</p>
+
+    <form id="registerForm">
+
+        <input
+        id="name"
+        type="text"
+        placeholder="Full Name"
+        required>
+
+        <input
+        id="email"
+        type="email"
+        placeholder="Email"
+        required>
+
+        <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        required>
+
+        <label>
+            <input
+            type="checkbox"
+            onclick="togglePassword()">
+            Show Password
+        </label>
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="login.html">Login</a>
+    </p>
+
+</div>
+
+<script>
+
+function togglePassword(){
+
+    let password =
+    document.getElementById("password");
+
+    if(password.type === "password"){
+        password.type = "text";
+    }else{
+        password.type = "password";
+    }
+}
+
+document
+.getElementById("registerForm")
+.addEventListener("submit",
+async (e)=>{
+
+    e.preventDefault();
+
+    const user = {
+
+        name:
+        document.getElementById("name").value,
+
+        email:
+        document.getElementById("email").value,
+
+        password:
+        document.getElementById("password").value
+    };
+
+    const res = await fetch(
+    "http://localhost:5000/api/users/register",
+    {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(user)
+    });
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    if(data.success){
+        window.location.href = "login.html";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

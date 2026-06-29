@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Violetelle Cart</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f7e7ef;
+min-height:100vh;
+padding:25px;
+}
+
+/* NAVBAR */
+
+.navbar{
+
+background:white;
+
+padding:15px 25px;
+
+border-radius:18px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,.08);
+
+margin-bottom:20px;
+
+}
+
+.logo{
+
+font-size:32px;
+font-weight:700;
+
+color:#c5428a;
+
+}
+
+.nav-right a{
+
+text-decoration:none;
+
+background:#d95b9f;
+
+color:white;
+
+padding:12px 20px;
+
+border-radius:30px;
+
+font-weight:600;
+
+}
+
+/* TITLE */
+
+.page-title{
+
+text-align:center;
+
+font-size:26px;
+
+color:#6b2450;
+
+margin-bottom:20px;
+
+}
+
+/* CART */
+
+#cartItems{
+
+max-width:1000px;
+
+margin:auto;
+
+}
+
+/* PRODUCT CARD */
+
+.card{
+
+background:white;
+
+padding:20px;
+
+border-radius:25px;
+
+margin-bottom:20px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+box-shadow:
+0 10px 25px rgba(213,91,159,.15);
+
+}
+
+.product-info h2{
+
+color:#c5428a;
+
+margin-bottom:8px;
+
+}
+
+.product-info p{
+
+color:#555;
+
+font-size:18px;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+transition:.3s;
+
+}
+
+
+
+/* QTY */
+
+.controls{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.qty-btn{
+
+width:40px;
+height:40px;
+
+border:none;
+
+border-radius:50%;
+
+background:#d95b9f;
+
+color:white;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+.remove-btn{
+
+background:#ff5f91;
+
+color:white;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:20px;
+
+cursor:pointer;
+
+}
+
+/* SUMMARY */
+
+.summary{
+
+background:white;
+
+max-width:350px;
+
+margin:25px auto;
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:
+0 10px 25px rgba(213,91,159,.15);
+
+}
+
+.summary h3{
+
+margin:12px 0;
+
+color:#555;
+
+}
+
+.summary h2{
+
+margin-top:20px;
+
+color:#c5428a;
+
+}
+
+.checkout-btn{
+
+width:100%;
+
+padding:12px;
+
+margin-top:20px;
+
+border:none;
+
+border-radius:25px;
+
+background:#d95b9f;
+
+color:white;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.clear-btn{
+
+width:100%;
+
+padding:18px;
+
+margin-top:10px;
+
+border:none;
+
+border-radius:35px;
+
+background:#ffe7f3;
+
+color:#c5428a;
+
+font-size:18px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+
+
+
+.checkout-btn{
+
+animation:glow 2s infinite;
+
+}
+
+@keyframes glow{
+
+50%{
+
+box-shadow:
+0 0 20px rgba(217,91,159,.5);
+
+}
+
+}
+
+
+
+
+
+
+/* EMPTY */
+
+.empty{
+
+background:white;
+
+padding:60px;
+
+border-radius:25px;
+
+text-align:center;
+
+box-shadow:
+0 10px 25px rgba(213,91,159,.15);
+
+}
+
+.empty h2{
+
+color:#c5428a;
+
+margin-top:10px;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+<div class="logo">
+🌸 Violetelle
+</div>
+
+<div class="nav-right">
+
+<a href="product.html">
+🛍 Continue Shopping
+</a>
+
+</div>
+
+</div>
+
+<h1 class="page-title">
+🛒 My Shopping Bag
+</h1>
+
+<div id="cartItems"></div>
+
+<div class="summary">
+
+<h3 id="subtotal"></h3>
+
+<h3 id="gst"></h3>
+
+<h2 id="grandTotal"></h2>
+
+<button
+class="checkout-btn"
+onclick="placeOrder()">
+
+💖 Proceed To Checkout
+
+</button>
+
+<button
+class="clear-btn"
+onclick="clearCart()">
+
+🗑 Clear Cart
+
+</button>
+
+</div>
+
+<script>
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+) || [];
+
+function renderCart(){
+
+let output="";
+
+let subtotal=0;
+
+if(cart.length===0){
+
+document.getElementById(
+"cartItems"
+).innerHTML=`
+
+<div class="empty">
+
+<h1>🛍️</h1>
+
+<h2>
+Your Cart Is Empty
+</h2>
+
+<p>
+Let's add something beautiful 🌸
+</p>
+
+</div>
+
+`;
+
+return;
+}
+
+cart.forEach((item,index)=>{
+
+let qty =
+item.qty || 1;
+
+output += `
+
+<div class="card">
+
+<div class="product-info">
+
+<img
+src="${item.image}"
+class="cart-img">
+
+<h2>${item.name}</h2>
+
+<p>₹${item.price}</p>
+
+</div>
+
+<div class="controls">
+
+<button
+class="qty-btn"
+onclick="decreaseQty(${index})">
+
+-
+
+</button>
+
+<span>${qty}</span>
+
+<button
+class="qty-btn"
+onclick="increaseQty(${index})">
+
++
+
+</button>
+
+<button
+class="remove-btn"
+onclick="removeItem(${index})">
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+subtotal +=
+item.price * qty;
+
+});
+
+let gst =
+subtotal * 0.18;
+
+let total =
+subtotal + gst;
+
+document.getElementById(
+"cartItems"
+).innerHTML = output;
+
+document.getElementById(
+"subtotal"
+).innerText =
+"Subtotal : ₹" + subtotal;
+
+document.getElementById(
+"gst"
+).innerText =
+"GST (18%) : ₹" +
+gst.toFixed(2);
+
+document.getElementById(
+"grandTotal"
+).innerText =
+"Grand Total : ₹" +
+total.toFixed(2);
+
+}
+
+function increaseQty(index){
+
+cart[index].qty=
+(cart[index].qty||1)+1;
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+renderCart();
+
+}
+
+function decreaseQty(index){
+
+if((cart[index].qty||1)>1){
+
+cart[index].qty--;
+
+}
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+renderCart();
+
+}
+
+function removeItem(index){
+
+cart.splice(index,1);
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+renderCart();
+
+}
+
+function clearCart(){
+
+cart=[];
+
+localStorage.removeItem(
+"cart"
+);
+
+renderCart();
+
+}
+
+function placeOrder(){
+
+let subtotal = 0;
+
+cart.forEach(item=>{
+
+subtotal +=
+item.price *
+(item.qty || 1);
+
+});
+
+let gst =
+subtotal * 0.18;
+
+let grandTotal =
+subtotal + gst;
+
+const order = {
+
+orderId:
+"ORD" + Date.now(),
+
+subtotal:
+subtotal,
+
+gst:
+gst,
+
+total:
+grandTotal,
+
+status:
+"Processing",
+
+orderTime:
+Date.now(),
+
+items:
+cart
+
+};
+
+let orders =
+JSON.parse(
+localStorage.getItem("orders")
+) || [];
+
+orders.push(order);
+
+localStorage.setItem(
+"orders",
+JSON.stringify(orders)
+);
+
+alert(
+"🎉 Order Placed Successfully!\n\nOrder ID: "
++ order.orderId
+);
+
+cart = [];
+
+localStorage.removeItem(
+"cart"
+);
+
+window.location.href =
+"orders.html";
+
+}
+
+
+
+
+
+renderCart();
+
+</script>
+
+</body>
+</html>

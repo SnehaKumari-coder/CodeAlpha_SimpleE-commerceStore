@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Violetelle</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f7e7ef;
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:white;
+box-shadow:0 2px 20px rgba(0,0,0,.08);
+}
+
+.logo{
+font-size:32px;
+font-weight:bold;
+color:#c5428a;
+}
+
+.nav-links a{
+text-decoration:none;
+margin-left:25px;
+font-weight:600;
+color:#555;
+}
+
+/* HERO */
+
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:80px;
+}
+
+.hero-text{
+width:55%;
+}
+
+.small{
+color:#d95b9f;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.hero-text h1{
+font-size:65px;
+color:#5d224d;
+margin:20px 0;
+}
+
+.hero-text p{
+font-size:20px;
+color:#666;
+line-height:1.8;
+}
+
+.shop-btn{
+margin-top:25px;
+padding:18px 45px;
+border:none;
+border-radius:40px;
+background:#d95b9f;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.shop-btn:hover{
+transform:translateY(-4px);
+}
+
+/* EMOJI GIRL */
+
+.hero-mascot{
+
+position:relative;
+
+width:350px;
+height:350px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+.emoji-girl{
+
+font-size:180px;
+
+animation:
+floatGirl 3s ease-in-out infinite;
+
+filter:
+drop-shadow(
+0 15px 20px rgba(0,0,0,.15)
+);
+
+}
+
+.bunny{
+
+position:absolute;
+
+font-size:60px;
+
+}
+
+.bunny-left{
+
+left:0;
+
+animation:
+hopLeft 3s infinite;
+
+}
+
+.bunny-right{
+
+right:0;
+
+animation:
+hopRight 3s infinite;
+
+}
+
+.heart{
+
+position:absolute;
+
+top:20px;
+right:80px;
+
+font-size:40px;
+
+animation:
+pulseHeart 1.5s infinite;
+
+}
+
+@keyframes floatGirl{
+
+50%{
+transform:
+translateY(-15px);
+}
+
+}
+
+@keyframes hopLeft{
+
+50%{
+transform:
+translateX(40px)
+translateY(-20px);
+}
+
+}
+
+@keyframes hopRight{
+
+50%{
+transform:
+translateX(-40px)
+translateY(-20px);
+}
+
+}
+
+@keyframes pulseHeart{
+
+50%{
+transform:
+scale(1.3);
+}
+
+}
+
+/* CATEGORIES */
+
+.section-title{
+text-align:center;
+font-size:50px;
+margin-top:50px;
+color:#6a2453;
+}
+
+.categories{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+padding:50px;
+}
+
+.category-card{
+width:220px;
+background:white;
+padding:30px;
+border-radius:30px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+cursor:pointer;
+transition:.3s;
+}
+
+.category-card:hover{
+transform:translateY(-10px);
+}
+
+.category-card h3{
+font-size:45px;
+margin-bottom:15px;
+}
+
+.category-card p{
+font-size:18px;
+color:#666;
+}
+
+/* BEST SELLERS */
+
+.best-sellers{
+padding:40px;
+text-align:center;
+}
+
+.best-sellers h2{
+font-size:45px;
+color:#6a2453;
+margin-bottom:30px;
+}
+
+.products{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+}
+
+.product{
+background:white;
+padding:25px;
+width:220px;
+border-radius:25px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.product h3{
+color:#c5428a;
+}
+
+/* REVIEWS */
+
+.reviews{
+padding:60px;
+text-align:center;
+}
+
+.reviews h2{
+font-size:45px;
+color:#6a2453;
+margin-bottom:30px;
+}
+
+.review-card{
+background:white;
+padding:25px;
+max-width:600px;
+margin:auto;
+border-radius:25px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+/* FOOTER */
+
+footer{
+background:white;
+margin-top:60px;
+padding:30px;
+text-align:center;
+font-weight:bold;
+color:#c5428a;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+🌸 Violetelle
+</div>
+
+<div class="nav-links">
+<a href="dashboard.html">Home</a>
+<a href="product.html">Shop</a>
+<a href="cart.html">Cart</a>
+<a href="orders.html">Orders</a>
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-text">
+
+<p class="small">
+NEW COLLECTION
+</p>
+
+<h1>
+Reveal Your Natural Glow ✨
+</h1>
+
+<p>
+Luxury Beauty • Makeup • Tech • Lifestyle
+Curated For Modern Queens 💖
+</p>
+
+<button
+class="shop-btn"
+onclick="window.location.href='product.html'">
+
+🛍 Shop Now
+
+</button>
+
+</div>
+
+<div class="hero-mascot">
+
+<div class="emoji-girl">
+👸🏻
+</div>
+
+<div class="bunny bunny-left">
+🐰
+</div>
+
+<div class="bunny bunny-right">
+🐇
+</div>
+
+<div class="heart">
+💖
+</div>
+
+</div>
+
+</section>
+
+<h2 class="section-title">
+Shop By Categories
+</h2>
+
+<div class="categories">
+
+<div class="category-card"
+onclick="window.location.href='product.html?category=Makeup'">
+
+<h3>💄</h3>
+
+<p>Makeup</p>
+
+</div>
+
+<div class="category-card"
+onclick="window.location.href='product.html?category=Skincare'">
+<h3>🧴</h3>
+<p>Skincare</p>
+</div>
+
+<div class="category-card"
+onclick="window.location.href='product.html?category=Mobile'">
+<h3>📱</h3>
+<p>Mobiles</p>
+</div>
+
+<div class="category-card"
+onclick="window.location.href='product.html?category=Laptop'">
+<h3>💻</h3>
+<p>Laptops</p>
+</div>
+
+<div class="category-card"
+onclick="window.location.href='product.html?category=Home Appliances'">
+<h3>🏠</h3>
+<p>Home</p>
+</div>
+
+</div>
+
+<section class="best-sellers">
+
+<h2>
+🔥 Best Sellers
+</h2>
+
+<div class="products">
+
+<div class="product">
+<h3>Luxury Collection</h3>
+<p>Premium Products</p>
+</div>
+
+<div class="product">
+<h3>Trending Now</h3>
+<p>Customer Favorites</p>
+</div>
+
+<div class="product">
+<h3>New Arrivals</h3>
+<p>Latest Collection</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="reviews">
+
+<h2>
+⭐ Customer Reviews
+</h2>
+
+<div class="review-card">
+
+<p>
+"Absolutely love Violetelle!
+Beautiful collection and amazing quality."
+</p>
+
+<br>
+
+<b>- Happy Customer 💖</b>
+
+</div>
+
+</section>
+
+<footer>
+
+🌸 Violetelle Luxury Store © 2026
+
+</footer>
+
+</body>
+</html>

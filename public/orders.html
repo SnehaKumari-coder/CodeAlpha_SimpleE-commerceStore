@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Violetelle Orders</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f7e7ef;
+padding:30px;
+}
+
+.navbar{
+
+background:white;
+
+padding:20px 30px;
+
+border-radius:20px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+margin-bottom:30px;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:bold;
+color:#c5428a;
+
+}
+
+.nav-btn{
+
+text-decoration:none;
+
+background:#d95b9f;
+
+color:white;
+
+padding:12px 20px;
+
+border-radius:25px;
+
+font-weight:bold;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#6a2453;
+
+margin-bottom:30px;
+
+}
+
+#orders{
+
+max-width:900px;
+
+margin:auto;
+
+display:flex;
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.order-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:
+0 8px 20px rgba(213,91,159,.15);
+
+}
+
+.order-id{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#c5428a;
+
+margin-bottom:15px;
+
+}
+
+.total{
+
+font-size:18px;
+
+color:#444;
+
+line-height:1.8;
+
+margin-bottom:15px;
+
+}
+
+.status{
+
+display:inline-block;
+
+padding:8px 15px;
+
+border-radius:20px;
+
+background:#ffe4f0;
+
+color:#c5428a;
+
+font-weight:bold;
+
+}
+
+.product-row{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+padding:10px;
+
+margin-top:10px;
+
+background:#fff6fa;
+
+border-radius:15px;
+
+}
+
+.product-row img{
+
+width:70px;
+height:70px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+}
+
+.empty{
+
+background:white;
+
+padding:50px;
+
+border-radius:25px;
+
+text-align:center;
+
+color:#c5428a;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+<div class="logo">
+🌸 Violetelle
+</div>
+
+<div>
+
+<a href="track-order.html"
+class="nav-btn"
+style="margin-right:10px;">
+
+🚚 Track Order
+
+</a>
+
+<a href="dashboard.html"
+class="nav-btn">
+
+🏠 Home
+
+</a>
+
+</div>
+
+</div>
+
+<h1>
+📦 My Orders
+</h1>
+
+<div id="orders"></div>
+
+<script>
+
+let orders =
+JSON.parse(
+localStorage.getItem("orders")
+) || [];
+
+let output = "";
+
+if(orders.length===0){
+
+output = `
+
+<div class="empty">
+
+<h2>
+📦 No Orders Yet
+</h2>
+
+<br>
+
+<p>
+Your orders will appear here 🌸
+</p>
+
+</div>
+
+`;
+
+}else{
+
+[...orders]
+.reverse()
+.forEach(order=>{
+
+let productsHtml = "";
+
+if(order.items){
+
+order.items.forEach(item=>{
+
+productsHtml += `
+
+<div class="product-row">
+
+<img
+src="${item.image || ''}">
+
+<div>
+
+<h4>
+${item.name}
+</h4>
+
+<p>
+₹${item.price}
+</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+output += `
+
+<div class="order-card">
+
+<div class="order-id">
+
+Order ID:
+${order.orderId}
+
+</div>
+
+<div class="total">
+
+💰 Subtotal:
+₹${order.subtotal || order.total}
+
+<br>
+
+🧾 GST:
+₹${order.gst ? order.gst.toFixed(2) : 0}
+
+<br>
+
+💖 Grand Total:
+₹${order.total}
+
+</div>
+
+${productsHtml}
+
+<br>
+
+<div class="status">
+
+🚚 ${order.status}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+document.getElementById(
+"orders"
+).innerHTML = output;
+
+</script>
+
+</body>
+</html>

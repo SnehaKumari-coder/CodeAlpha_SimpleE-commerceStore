@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Track Order</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#f7e7ef;
+padding:30px;
+}
+
+/* NAVBAR */
+
+.navbar{
+background:white;
+padding:20px 30px;
+border-radius:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+margin-bottom:30px;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#c5428a;
+}
+
+.nav-btn{
+text-decoration:none;
+background:#d95b9f;
+color:white;
+padding:12px 20px;
+border-radius:25px;
+font-weight:bold;
+}
+
+/* TITLE */
+
+h1{
+text-align:center;
+color:#6a2453;
+margin-bottom:30px;
+}
+
+/* TRACK CARD */
+
+.track-card{
+max-width:700px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:25px;
+box-shadow:0 8px 20px rgba(213,91,159,.15);
+}
+
+.order-id{
+font-size:22px;
+font-weight:bold;
+color:#c5428a;
+margin-bottom:20px;
+}
+
+.status-box{
+margin-top:25px;
+}
+
+.step{
+display:flex;
+align-items:center;
+margin:20px 0;
+}
+
+.circle{
+width:35px;
+height:35px;
+border-radius:50%;
+background:#d95b9f;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+margin-right:15px;
+}
+
+.text{
+font-size:18px;
+color:#444;
+}
+
+.active{
+font-weight:bold;
+color:#c5428a;
+}
+
+.empty{
+background:white;
+padding:40px;
+border-radius:20px;
+text-align:center;
+color:#c5428a;
+max-width:700px;
+margin:auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+<div class="logo">
+🌸 Violetelle
+</div>
+
+<div>
+
+<a
+href="track-order.html"
+class="nav-btn"
+style="margin-right:10px;">
+
+🚚 Track Order
+
+</a>
+
+<a
+href="dashboard.html"
+class="nav-btn">
+
+🏠 Home
+
+</a>
+
+</div>
+
+</div>
+
+<h1>
+📦 Track Order
+</h1>
+
+<div id="trackContainer"></div>
+
+<script>
+
+let orders =
+JSON.parse(
+localStorage.getItem("orders")
+) || [];
+
+let container =
+document.getElementById(
+"trackContainer"
+);
+
+if(orders.length === 0){
+
+container.innerHTML = `
+
+<div class="empty">
+
+<h2>📦 No Orders Found</h2>
+
+<br>
+
+<p>
+Place an order first 💖
+</p>
+
+</div>
+
+`;
+
+}else{
+
+let latestOrder =
+orders[orders.length - 1];
+
+let minutesPassed =
+
+(Date.now() -
+latestOrder.orderTime)
+
+/
+
+(1000 * 60);
+
+
+if(minutesPassed >= 25){
+
+latestOrder.status =
+"Delivered";
+
+}else if(minutesPassed >= 15){
+
+latestOrder.status =
+"Out For Delivery";
+
+}else if(minutesPassed >= 5){
+
+latestOrder.status =
+"Shipped";
+
+}else{
+
+latestOrder.status =
+"Processing";
+
+}
+
+
+localStorage.setItem(
+"orders",
+JSON.stringify(orders)
+);
+
+let shippedTick = "3";
+let outTick = "4";
+let deliveredTick = "5";
+
+if(latestOrder.status === "Shipped"){
+
+    shippedTick = "✓";
+
+}
+
+if(latestOrder.status === "Out For Delivery"){
+
+    shippedTick = "✓";
+    outTick = "✓";
+
+}
+
+if(latestOrder.status === "Delivered"){
+
+    shippedTick = "✓";
+    outTick = "✓";
+    deliveredTick = "✓";
+
+}
+
+
+
+container.innerHTML = `
+
+<div class="track-card">
+
+<div class="order-id">
+
+Order ID:
+${latestOrder.orderId}
+
+</div>
+
+<h3>
+Current Status:
+🚚 ${latestOrder.status}
+</h3>
+
+<div class="status-box">
+
+<div class="step">
+<div class="circle">✓</div>
+<div class="text active">
+Order Placed
+</div>
+</div>
+
+<div class="step">
+<div class="circle">✓</div>
+<div class="text active">
+Processing
+</div>
+</div>
+
+<div class="step">
+<div class="circle">${shippedTick}</div>
+<div class="text ${shippedTick === '✓' ? 'active' : ''}">
+Shipped
+</div>
+</div>
+
+<div class="step">
+<div class="circle">${outTick}</div>
+<div class="text ${outTick === '✓' ? 'active' : ''}">
+Out For Delivery
+</div>
+</div>
+
+<div class="step">
+<div class="circle">${deliveredTick}</div>
+<div class="text ${deliveredTick === '✓' ? 'active' : ''}">
+Delivered
+</div>
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>

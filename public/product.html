@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Violetelle Products</title>
+
+<style>
+
+
+
+
+
+
+
+
+body{
+font-family:Poppins,sans-serif;
+background:#f7e7ef;
+padding:20px;
+}
+
+h1{
+text-align:center;
+color:#c5428a;
+margin-bottom:30px;
+}
+
+#products{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
+
+.card{
+background:white;
+padding:20px;
+width:280px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+text-align:center;
+}
+
+.card img{
+width:200px;
+height:200px;
+object-fit:contain;
+}
+
+button{
+
+background:#d95b9f;
+color:white;
+
+border:none;
+
+padding:12px 25px;
+
+border-radius:30px;
+
+font-size:16px;
+font-weight:bold;
+
+cursor:pointer;
+
+transition:all 0.3s ease;
+
+box-shadow:
+0 5px 15px rgba(217,91,159,.35);
+
+}
+
+/* Hover */
+
+button:hover{
+
+transform:
+translateY(-4px)
+scale(1.05);
+
+box-shadow:
+0 10px 25px rgba(217,91,159,.45);
+
+}
+
+/* Click */
+
+button:active{
+
+transform:
+scale(0.95);
+
+}
+
+/* Go To Cart Button */
+
+
+
+.cart-btn{
+
+display:inline-block;
+
+width:250px;
+
+text-align:center;
+
+background:#d95b9f;
+
+color:white;
+
+padding:15px;
+
+border-radius:40px;
+
+text-decoration:none;
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes glow{
+
+0%{
+
+box-shadow:
+0 0 10px rgba(217,91,159,.4);
+
+}
+
+50%{
+
+box-shadow:
+0 0 25px rgba(217,91,159,.8);
+
+}
+
+100%{
+
+box-shadow:
+0 0 10px rgba(217,91,159,.4);
+
+}
+
+}
+
+.cart-btn{
+display:block;
+margin:30px auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1 id="pageTitle">
+Our Products
+</h1>
+
+<div id="products"></div>
+
+<a href="cart.html" class="cart-btn">
+🛒 Go To Cart
+</a>
+
+<script>
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const category =
+params.get("category");
+
+if(category){
+
+document.getElementById(
+"pageTitle"
+).innerText =
+category + " Collection";
+
+}
+
+</script>
+
+<script src="js/products.js"></script>
+
+</body>
+</html>
